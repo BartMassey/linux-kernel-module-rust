@@ -83,7 +83,7 @@ unsafe extern "C" fn proc_handler<T: SysctlStorage>(
     ctl: *mut bindings::ctl_table,
     write: c_types::c_int,
     buffer: *mut c_types::c_void,
-    len: *mut usize,
+    len: *mut c_types::c_ulong,
     ppos: *mut bindings::loff_t,
 ) -> c_types::c_int {
     // If we're reading from some offset other than the beginning of the file,
@@ -93,7 +93,7 @@ unsafe extern "C" fn proc_handler<T: SysctlStorage>(
         return 0;
     }
 
-    let data = match UserSlicePtr::new(buffer, *len) {
+    let data = match UserSlicePtr::new(buffer, (*len) as usize) {
         Ok(ptr) => ptr,
         Err(e) => return e.to_kernel_errno(),
     };
@@ -108,7 +108,7 @@ unsafe extern "C" fn proc_handler<T: SysctlStorage>(
         let mut writer = data.writer();
         storage.read_value(&mut writer)
     };
-    *len = bytes_processed;
+    *len = bytes_processed as u64;
     *ppos += *len as bindings::loff_t;
     match result {
         Ok(()) => 0,

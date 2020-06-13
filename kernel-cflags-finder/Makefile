@@ -30,7 +30,7 @@ else
 KDIR ?= /lib/modules/$(shell uname -r)/build
 CLANG ?= clang
 all:
-	$(MAKE) -C $(KDIR) M=$(CURDIR) CC=$(CLANG)
+	$(MAKE) -C $(KDIR) M=$(CURDIR) CC=clang-11 CONFIG_CC_IS_CLANG=1
 clean:
 	$(MAKE) -C $(KDIR) M=$(CURDIR) clean
 endif

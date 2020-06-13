@@ -1,4 +1,8 @@
+#![feature(lang_items)]
 #![no_std]
+
+#[lang = "eh_personality"]
+extern "C" fn eh_personality() {}
 
 extern crate alloc;
 

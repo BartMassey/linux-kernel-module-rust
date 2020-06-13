@@ -52,8 +52,9 @@ properly](https://github.com/rust-lang/rust-bindgen/issues/1316). If
 you're running kernel 5.0 or newer, [you'll need Clang
 9](https://github.com/fishinabarrel/linux-kernel-module-rust/issues/123)
 (released September 2019), which adds support for `asm goto`.
+For kernel 5.6, Clang 11 seems to work.
 You may need to set the `CLANG` environment variable appropriately,
-e.g., `CLANG=clang-9`.
+e.g., `CLANG=clang-11`.
 
 ## Building hello-world
 
